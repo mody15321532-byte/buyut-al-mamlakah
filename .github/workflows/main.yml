@@ -1,4 +1,4 @@
-name: Setup and Build Environment
+name: Build Flutter APK
 
 on:
   push:
@@ -11,11 +11,16 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    # الخطوة دي هي اللي بتثبت فلاتر تلقائياً على سيرفر جيت هاب
     - uses: subosito/flutter-action@v2
       with:
         flutter-version: '3.19.x'
         channel: 'stable'
 
-    # التحقق من أن فلاتر اتثبتت واشتغلت تمام
-    - run: flutter --version
+    - run: flutter pub get
+    - run: flutter build apk --release
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: app-release
+        path: build/app/outputs/flutter-apk/app-release.apk
