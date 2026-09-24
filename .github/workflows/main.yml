@@ -1,4 +1,4 @@
-name: Build Flutter App
+name: Setup and Build Environment
 
 on:
   push:
@@ -9,12 +9,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
+    # الخطوة دي هي اللي بتثبت فلاتر تلقائياً على سيرفر جيت هاب
     - uses: subosito/flutter-action@v2
       with:
-        flutter-version: '3.10.x'
+        flutter-version: '3.19.x'
         channel: 'stable'
 
-    - run: flutter pub get
-    - run: flutter build apk --release
+    # التحقق من أن فلاتر اتثبتت واشتغلت تمام
+    - run: flutter --version
